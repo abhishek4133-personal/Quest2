@@ -10,6 +10,7 @@ import com.learn.quest2.presentation.state.FilterEvent
 import com.learn.quest2.presentation.state.PriceRange
 import com.learn.quest2.presentation.state.ProductState
 import com.learn.quest2.presentation.state.QueryFilter
+import com.learn.quest2.presentation.state.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
