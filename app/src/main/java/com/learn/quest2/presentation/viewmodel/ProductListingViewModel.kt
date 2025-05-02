@@ -8,7 +8,7 @@ import com.learn.quest2.helper.Converter.toProductList
 import com.learn.quest2.presentation.state.Category
 import com.learn.quest2.presentation.state.FilterEvent
 import com.learn.quest2.presentation.state.PriceRange
-import com.learn.quest2.presentation.state.ProductListingState
+import com.learn.quest2.presentation.state.ProductState
 import com.learn.quest2.presentation.state.QueryFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +32,7 @@ class ProductListingViewModel @Inject constructor(
     ) : ViewModel() {
 
     val TAG = javaClass.simpleName
-    private val _uiListingState = MutableStateFlow(ProductListingState())
+    private val _uiListingState = MutableStateFlow(ProductState())
 
     private val _filterType = MutableStateFlow(QueryFilter())
     val filterType = _filterType.asStateFlow()
@@ -58,7 +58,7 @@ class ProductListingViewModel @Inject constructor(
         uiListingState.copy(
             products = productEntityList.toProductList(),
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProductListingState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProductState())
 
 
     init {

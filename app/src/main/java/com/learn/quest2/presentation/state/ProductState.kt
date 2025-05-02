@@ -2,7 +2,7 @@ package com.learn.quest2.presentation.state
 
 import com.learn.quest2.data.model.Product
 
-data class ProductListingState(
+data class ProductState(
     val products: List<Product> = emptyList(),
     val error: String = ""
 )
