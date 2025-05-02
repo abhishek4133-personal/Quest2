@@ -41,7 +41,7 @@ import com.learn.quest2.presentation.viewmodel.ProductListingViewModel
 fun HomeScreen() {
     val viewModel = hiltViewModel<ProductListingViewModel>()
     val uiState by viewModel.state.collectAsState()
-    val filterState by viewModel.filterType.collectAsState()
+    val filterState by viewModel.filterTypeState.collectAsState()
 
     var isBottomSheetVisible by remember { mutableStateOf(false) }
 

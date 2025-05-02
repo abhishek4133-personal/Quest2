@@ -28,7 +28,7 @@ import com.learn.quest2.presentation.viewmodel.ProductListingViewModel
 fun FilterBottomSheetContent(
     viewModel: ProductListingViewModel, onDismiss: () -> Unit, onRefresh: () -> Unit
 ) {
-    val state by viewModel.filterType.collectAsState()
+    val state by viewModel.filterTypeState.collectAsState()
     val scrollState = rememberScrollState()
 
     Column(

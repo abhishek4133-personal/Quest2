@@ -32,16 +32,16 @@ class ProductListingViewModel @Inject constructor(
     ) : ViewModel() {
 
     val TAG = javaClass.simpleName
-    private val _uiListingState = MutableStateFlow(ProductState())
+    private val _uiState = MutableStateFlow(ProductState())
 
-    private val _filterType = MutableStateFlow(QueryFilter())
-    val filterType = _filterType.asStateFlow()
+    private val _filterTypeState = MutableStateFlow(QueryFilter())
+    val filterTypeState = _filterTypeState.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    private val _productList = _filterType
+    private val _productList = _filterTypeState
         .flatMapLatest { filter ->
             if (filter.searchTerm.isNotEmpty()) {
-                _filterType.debounce(500)
+                _filterTypeState.debounce(500)
                     .flatMapLatest {
                         productRepository.searchAndStoreProduct(filter.searchTerm)
                     }
@@ -52,7 +52,7 @@ class ProductListingViewModel @Inject constructor(
 
 
     val state = combine(
-        _uiListingState,
+        _uiState,
         _productList
     ) { uiListingState, productEntityList ->
         uiListingState.copy(
@@ -79,7 +79,7 @@ class ProductListingViewModel @Inject constructor(
     }
 
     fun onSearch(searchTerm: String) {
-        _filterType.update { currentState ->
+        _filterTypeState.update { currentState ->
             currentState.copy(
                 searchTerm = searchTerm,
                 category = Category.ALL,
@@ -91,21 +91,21 @@ class ProductListingViewModel @Inject constructor(
     fun onQueryChanged(filterEvent: FilterEvent) {
         when(filterEvent) {
             is FilterEvent.OnSortingOrderChanged -> {
-                _filterType.update { currentState ->
+                _filterTypeState.update { currentState ->
                     currentState.copy(
                         sortOrder = filterEvent.sortOrder
                     )
                 }
             }
             is FilterEvent.OnPriceRangeChanged -> {
-                _filterType.update { currentState ->
+                _filterTypeState.update { currentState ->
                     currentState.copy(
                         priceRange = filterEvent.priceRange,
                     )
                 }
             }
             is FilterEvent.OnCategoryChanged -> {
-                _filterType.update { currentState ->
+                _filterTypeState.update { currentState ->
                     currentState.copy(
                         category =  filterEvent.category,
                     )
