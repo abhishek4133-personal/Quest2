@@ -16,6 +16,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(
@@ -51,10 +52,11 @@ class ProductRepositoryImpl @Inject constructor(
             val apiResult = searchedProductsFromApi(searchTerm)
             val dbFlow = searchedProductsFromDB(searchTerm)
 
-            combine(apiResult, dbFlow) { apiProducts, dbProducts ->
-                (apiProducts + dbProducts).distinctBy { it.id }
-            }.collect {
-                emit(it)
+            merge(
+                apiResult,
+                dbFlow
+            ).collect { apiProducts ->
+               emit(apiProducts.distinctBy { it.id })
             }
         }
 
