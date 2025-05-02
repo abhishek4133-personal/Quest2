@@ -1,4 +1,4 @@
-package com.learn.quest2.presentation.screen
+package com.learn.quest2.presentation.composable.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.learn.quest2.domain.repository.ProductRepository
 import com.learn.quest2.helper.Converter.toProductList
 import com.learn.quest2.presentation.state.Category
+import com.learn.quest2.presentation.state.FilterEvent
 import com.learn.quest2.presentation.state.PriceRange
 import com.learn.quest2.presentation.state.ProductListingState
 import com.learn.quest2.presentation.state.QueryFilter
@@ -21,7 +22,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 
@@ -88,13 +88,29 @@ class ProductListingViewModel @Inject constructor(
         }
     }
 
-    fun onQueryChanged(queryFilter: QueryFilter) {
-        _filterType.update { currentState ->
-            currentState.copy(
-                priceRange = queryFilter.priceRange,
-                category =  queryFilter.category,
-                sortOrder = queryFilter.sortOrder
-            )
+    fun onQueryChanged(filterEvent: FilterEvent) {
+        when(filterEvent) {
+            is FilterEvent.OnSortingOrderChanged -> {
+                _filterType.update { currentState ->
+                    currentState.copy(
+                        sortOrder = filterEvent.sortOrder
+                    )
+                }
+            }
+            is FilterEvent.OnPriceRangeChanged -> {
+                _filterType.update { currentState ->
+                    currentState.copy(
+                        priceRange = filterEvent.priceRange,
+                    )
+                }
+            }
+            is FilterEvent.OnCategoryChanged -> {
+                _filterType.update { currentState ->
+                    currentState.copy(
+                        category =  filterEvent.category,
+                    )
+                }
+            }
         }
     }
 

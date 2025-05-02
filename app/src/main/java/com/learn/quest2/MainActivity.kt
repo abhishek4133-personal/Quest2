@@ -14,7 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.learn.quest2.presentation.screen.HomeScreen
+import com.learn.quest2.presentation.composable.screen.HomeScreen
 import com.learn.quest2.presentation.viewmodel.ProductListingViewModel
 import com.learn.quest2.ui.theme.Quest2Theme
 import dagger.hilt.android.AndroidEntryPoint

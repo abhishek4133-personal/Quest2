@@ -19,13 +19,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.learn.quest2.presentation.state.Category
+import com.learn.quest2.presentation.state.FilterEvent
 import com.learn.quest2.presentation.state.PriceRange
-import com.learn.quest2.presentation.state.QueryFilter
 import com.learn.quest2.presentation.state.SortOrder
 import com.learn.quest2.presentation.viewmodel.ProductListingViewModel
 
 @Composable
-fun FilterBottomSheetContent(viewModel: ProductListingViewModel, onDismiss: () -> Unit, onRefresh: () -> Unit){
+fun FilterBottomSheetContent(
+    viewModel: ProductListingViewModel, onDismiss: () -> Unit, onRefresh: () -> Unit
+) {
     val state by viewModel.filterType.collectAsState()
     val scrollState = rememberScrollState()
 
@@ -35,120 +37,116 @@ fun FilterBottomSheetContent(viewModel: ProductListingViewModel, onDismiss: () -
             .padding(8.dp)
             .verticalScroll(scrollState)
     ) {
+
         Button(onClick = onRefresh) {
             Text(text = "Refresh", style = MaterialTheme.typography.bodyMedium)
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Choose a Sort Order",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(8.dp)
-            )
-            SortOrder.entries.forEach { option ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        viewModel.onQueryChanged(
-                            QueryFilter(
-                                sortOrder = option,
-                            )
+        Text(
+            text = "Choose a Sort Order",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(8.dp)
+        )
+        SortOrder.entries.forEach { option ->
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnSortingOrderChanged(
+                            sortOrder = option,
                         )
-                    }) {
-                    RadioButton(
-                        selected = (option == state.sortOrder),
-                        onClick = {
-                            viewModel.onQueryChanged(
-                                QueryFilter(
-                                    sortOrder = option,
-                                )
-                            )
-                        }
                     )
-                    Text(
-                        text = option.name,
-                        modifier = Modifier.padding(top = 10.dp)
+                }) {
+
+                RadioButton(selected = (option == state.sortOrder), onClick = {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnSortingOrderChanged(
+                            sortOrder = option,
+                        )
                     )
-                }
+                })
+
+                Text(
+                    text = option.name, modifier = Modifier.padding(top = 10.dp)
+                )
             }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Choose a Category",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(8.dp)
-            )
-            Category.entries.forEach { option ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        viewModel.onQueryChanged(
-                            QueryFilter(
-                                category = option,
-                            )
+        Text(
+            text = "Choose a Category",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(8.dp)
+        )
+        Category.entries.forEach { option ->
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnCategoryChanged(
+                            category = option,
                         )
-                    }) {
-                    RadioButton(
-                        selected = (option == state.category),
-                        onClick = {
-                            viewModel.onQueryChanged(
-                                QueryFilter(
-                                    category = option,
-                                )
-                            )
-                        }
                     )
-                    Text(
-                        text = option.name,
-                        modifier = Modifier.padding(top = 10.dp)
+                }) {
+
+                RadioButton(selected = (option == state.category), onClick = {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnCategoryChanged(
+                            category = option,
+                        )
                     )
-                }
+                })
+
+                Text(
+                    text = option.name, modifier = Modifier.padding(top = 10.dp)
+                )
             }
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Choose a Price Range",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(8.dp)
-            )
+        Text(
+            text = "Choose a Price Range",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(8.dp)
+        )
 
-            PriceRange.entries.forEach { option ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        viewModel.onQueryChanged(
-                            QueryFilter(
-                                priceRange = option,
-                            )
+        PriceRange.entries.forEach { option ->
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnPriceRangeChanged(
+                            priceRange = option,
                         )
-                    }) {
-                    RadioButton(
-                        selected = (option == state.priceRange),
-                        onClick = {
-                            viewModel.onQueryChanged(
-                                QueryFilter(
-                                    priceRange = option,
-                                )
-                            )
-                        }
                     )
-                    Text(
-                        text = when {
-                            (option == PriceRange.LESS_THAN_1000) -> "Lesser than 1000"
-                            (option == PriceRange.LESS_THAN_100) -> "Lesser than 100"
-                            (option == PriceRange.LESS_THAN_50) -> "Lesser than 50"
-                            (option == PriceRange.LESS_THAN_10) -> "Lesser than 10"
-                            (option == PriceRange.LESS_THAN_5) -> "Lesser than 5"
-                            (option == PriceRange.ALL) -> "All Products"
-                            else -> "All Products"
-                        },
-                        modifier = Modifier.padding(top = 12.dp)
-                    )
-                }
-            }
+                }) {
 
+                RadioButton(selected = (option == state.priceRange), onClick = {
+                    viewModel.onQueryChanged(
+                        FilterEvent.OnPriceRangeChanged(
+                            priceRange = option,
+                        )
+                    )
+                })
+
+                Text(
+                    text = when {
+                        (option == PriceRange.LESS_THAN_1000) -> "Lesser than 1000"
+                        (option == PriceRange.LESS_THAN_100) -> "Lesser than 100"
+                        (option == PriceRange.LESS_THAN_50) -> "Lesser than 50"
+                        (option == PriceRange.LESS_THAN_10) -> "Lesser than 10"
+                        (option == PriceRange.LESS_THAN_5) -> "Lesser than 5"
+                        (option == PriceRange.ALL) -> "All Products"
+                        else -> "All Products"
+                    }, modifier = Modifier.padding(top = 12.dp)
+                )
+            }
+        }
     }
-
 }

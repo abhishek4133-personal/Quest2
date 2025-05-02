@@ -22,6 +22,7 @@ class ProductRepositoryImpl @Inject constructor(
     private val productAPI: ProductAPI,
     private val productDao: ProductDao
 ) : ProductRepository {
+    val TAG = javaClass.simpleName
 
     override suspend fun insertAllProductsFromDB(listOfProductEntity: List<ProductEntity>) {
         productDao.insertAllProduct(listOfProductEntity)
@@ -37,7 +38,7 @@ class ProductRepositoryImpl @Inject constructor(
                 emit(it.products.toProductEntityList())
             }.onFailure { error ->
                 emit(emptyList())
-                Log.e("TAG", "getSearchedProductsFromApi: $error")
+                Log.e(TAG, "getSearchedProductsFromApi: $error")
             }
         }
 
