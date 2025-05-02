@@ -45,23 +45,16 @@ fun HomeScreen() {
 
     var isBottomSheetVisible by remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White),
-        topBar = {
+        Column(
+            modifier = Modifier
+                .background(Color.White)
+        ) {
             Header(
+                modifier = Modifier,
                 searchQuery = filterState.searchTerm,
                 onSearchQueryChange = { viewModel.onSearch(searchTerm = it) },
                 onFilterClick = { isBottomSheetVisible = true }
             )
-        },
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .background(Color.White)
-        ) {
             LazyColumn(
                 modifier = Modifier
                     .background(Color.White)
@@ -72,7 +65,7 @@ fun HomeScreen() {
                 }
             }
         }
-    }
+
 
     if (isBottomSheetVisible) {
         ModalBottomSheet(
