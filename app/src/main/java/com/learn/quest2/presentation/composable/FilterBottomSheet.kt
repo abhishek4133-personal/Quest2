@@ -137,11 +137,11 @@ fun FilterBottomSheetContent(
 
                 Text(
                     text = when {
-                        (option == PriceRange.LESS_THAN_1000) -> "Lesser than 1000"
-                        (option == PriceRange.LESS_THAN_100) -> "Lesser than 100"
-                        (option == PriceRange.LESS_THAN_50) -> "Lesser than 50"
-                        (option == PriceRange.LESS_THAN_10) -> "Lesser than 10"
-                        (option == PriceRange.LESS_THAN_5) -> "Lesser than 5"
+                        (option == PriceRange.LESS_THAN_1000) -> "Lesser than $1000"
+                        (option == PriceRange.LESS_THAN_100) -> "Lesser than $100"
+                        (option == PriceRange.LESS_THAN_50) -> "Lesser than $50"
+                        (option == PriceRange.LESS_THAN_10) -> "Lesser than $10"
+                        (option == PriceRange.LESS_THAN_5) -> "Lesser than $5"
                         (option == PriceRange.ALL) -> "All Products"
                         else -> "All Products"
                     }, modifier = Modifier.padding(top = 12.dp)
