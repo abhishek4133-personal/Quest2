@@ -56,13 +56,14 @@ class ProductListingViewModel @Inject constructor(
 
     val state = combine(
         _uiState,
+        _filterTypeState,
         _searchResultsFlow,
         _productListFlow
-    ) { uiListingState, searchResults, allProducts ->
+    ) { uiListingState, filterTypeState, searchResults, allProducts ->
         uiListingState.copy(
             products = when {
                 searchResults.isNotEmpty() -> searchResults.toProductList()
-                filterTypeState.value.searchTerm.isNotEmpty() -> emptyList()
+                filterTypeState.searchTerm.isNotEmpty() -> emptyList()
                 else -> allProducts.toProductList()
             }
         )
