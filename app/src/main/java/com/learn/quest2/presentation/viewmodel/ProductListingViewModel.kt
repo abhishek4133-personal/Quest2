@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -39,28 +41,34 @@ class ProductListingViewModel @Inject constructor(
     val filterTypeState = _filterTypeState.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    private val _productList = _filterTypeState
+    private val _searchResults = _filterTypeState
+        .debounce(500)
         .flatMapLatest { filter ->
             if (filter.searchTerm.isNotEmpty()) {
-                _filterTypeState.debounce(500)
-                    .flatMapLatest {
-                        productRepository.searchAndStoreProduct(filter.searchTerm)
-                    }
+                productRepository.searchAndStoreProduct(filter.searchTerm)
             } else {
-                productRepository.getAllProductsFromDBWithFilter(filter)
+                flowOf(emptyList())
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        }
 
+    private val _productList = _filterTypeState
+        .flatMapLatest { filter ->
+            productRepository.getAllProductsFromDBWithFilter(filter)
+        }
 
     val state = combine(
         _uiState,
+        _searchResults,
         _productList
-    ) { uiListingState, productEntityList ->
+    ) { uiListingState, searchResults, allProducts ->
         uiListingState.copy(
-            products = productEntityList.toProductList(),
+            products = if (searchResults.isNotEmpty()) {
+                searchResults.toProductList()
+            } else {
+                allProducts.toProductList()
+            }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProductState())
-
 
     init {
         getAllProducts()
