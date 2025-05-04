@@ -10,7 +10,6 @@ import com.learn.quest2.presentation.state.FilterEvent
 import com.learn.quest2.presentation.state.PriceRange
 import com.learn.quest2.presentation.state.ProductState
 import com.learn.quest2.presentation.state.QueryFilter
-import com.learn.quest2.presentation.state.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -41,7 +39,7 @@ class ProductListingViewModel @Inject constructor(
     val filterTypeState = _filterTypeState.asStateFlow()
 
     @OptIn(FlowPreview::class)
-    private val _searchResults = _filterTypeState
+    private val _searchResultsFlow = _filterTypeState
         .debounce(500)
         .flatMapLatest { filter ->
             if (filter.searchTerm.isNotEmpty()) {
@@ -51,15 +49,15 @@ class ProductListingViewModel @Inject constructor(
             }
         }
 
-    private val _productList = _filterTypeState
+    private val _productListFlow = _filterTypeState
         .flatMapLatest { filter ->
             productRepository.getAllProductsFromDBWithFilter(filter)
         }
 
     val state = combine(
         _uiState,
-        _searchResults,
-        _productList
+        _searchResultsFlow,
+        _productListFlow
     ) { uiListingState, searchResults, allProducts ->
         uiListingState.copy(
             products = if (searchResults.isNotEmpty()) {
