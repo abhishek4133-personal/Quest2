@@ -60,10 +60,10 @@ class ProductListingViewModel @Inject constructor(
         _productListFlow
     ) { uiListingState, searchResults, allProducts ->
         uiListingState.copy(
-            products = if (searchResults.isNotEmpty()) {
-                searchResults.toProductList()
-            } else {
-                allProducts.toProductList()
+            products = when {
+                searchResults.isNotEmpty() -> searchResults.toProductList()
+                filterTypeState.value.searchTerm.isNotEmpty() -> emptyList()
+                else -> allProducts.toProductList()
             }
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ProductState())
