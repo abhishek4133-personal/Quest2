@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.learn.quest2.helper.Screens
 import com.learn.quest2.presentation.viewmodel.ECommerceViewModel
@@ -37,13 +38,13 @@ fun ECommerceScreen(
     navController: NavController,
     viewModel: ECommerceViewModel
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
             Text(
                 text = "Order Screen",
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = 12.dp)
                     .fillMaxWidth(),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center
