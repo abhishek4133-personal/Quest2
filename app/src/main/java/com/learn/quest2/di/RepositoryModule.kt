@@ -2,6 +2,8 @@ package com.learn.quest2.di
 
 import com.learn.quest2.data.api.ProductAPI
 import com.learn.quest2.data.dao.ProductDao
+import com.learn.quest2.domain.repository.ECommerceRepository
+import com.learn.quest2.domain.repository.ECommerceRepositoryImpl
 import com.learn.quest2.domain.repository.ProductRepository
 import com.learn.quest2.domain.repository.ProductRepositoryImpl
 import dagger.Binds
@@ -21,4 +23,10 @@ abstract class RepositoryModule {
     abstract fun provideProductRepository(
         productRepositoryImpl: ProductRepositoryImpl
     ): ProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideECommerceRepository(
+        eCommerceRepositoryImpl: ECommerceRepositoryImpl
+    ): ECommerceRepository
 }
