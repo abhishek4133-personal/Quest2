@@ -21,10 +21,12 @@ class ECommerceViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        //IMPORTANT
-        // {repository.getListOfOrders()} generates random data each time we call it, that is the reason to keep it in init,
-        // so that same data will be available in every stats building and passing it to useCase
-        // instead of getting directly in useCase from repo
+        /*
+         IMPORTANT
+         {repository.getListOfOrders()} generates random data each time we call it, that is the reason to keep it in init,
+         so that same data will be available in every stats building and passing it to useCase
+         instead of getting directly in useCase from repo
+         */
 
         val userList = repository.getListOfUsers()
         val orderList = repository.getListOfOrders()
