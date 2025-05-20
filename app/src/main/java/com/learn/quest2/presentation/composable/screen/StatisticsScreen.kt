@@ -4,13 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -22,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -76,10 +73,10 @@ fun StatisticsScreen(
                     labelText = "Most Expensive Product Item"
                 )
                 StatsItem(
-                    text = "Product ID: ${uiState.expensiveOrder?.productId}"
+                    text = "Product ID =====> ${uiState.expensiveOrder?.productId}"
                 )
                 StatsItem(
-                    text = "Price: $${uiState.expensiveOrder?.price}"
+                    text = "Price =====> $${uiState.expensiveOrder?.price}"
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -89,7 +86,7 @@ fun StatisticsScreen(
                 )
                 uiState.uniqueProductIds?.forEach() { ids ->
                     StatsItem(
-                        text = "ids -> $ids"
+                        text = "ids =====> $ids"
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -100,7 +97,7 @@ fun StatisticsScreen(
                 )
                 uiState.productSaleCount?.forEach { map ->
                     StatsItem(
-                        text = "${map.key} -> ${map.value} times"
+                        text = "${map.key} =====> ${map.value} times"
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -111,7 +108,7 @@ fun StatisticsScreen(
                 )
                 uiState.spendingForEachUser?.forEach { map ->
                     StatsItem(
-                        text = "${map.key} -> $${map.value}"
+                        text = "${map.key} =====> $${map.value}"
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
