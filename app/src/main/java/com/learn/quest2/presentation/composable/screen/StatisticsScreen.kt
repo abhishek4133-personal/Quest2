@@ -1,6 +1,7 @@
 package com.learn.quest2.presentation.composable.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +40,11 @@ fun StatisticsScreen(
     viewModel: ECommerceViewModel
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.getAllStatistics()
+    }
+
     Scaffold(
         topBar = {
             Box {
@@ -61,7 +68,8 @@ fun StatisticsScreen(
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(it)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Card {
                 Label(
@@ -73,8 +81,8 @@ fun StatisticsScreen(
                 StatsItem(
                     text = "Price: $${uiState.expensiveOrder?.price}"
                 )
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.height(8.dp))
             Card {
                 Label(
                     labelText = "Unique Product Item IDs"
@@ -84,8 +92,8 @@ fun StatisticsScreen(
                         text = "ids -> $ids"
                     )
                 }
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.height(8.dp))
             Card {
                 Label(
                     labelText = "Product Sale Count"
@@ -95,8 +103,8 @@ fun StatisticsScreen(
                         text = "${map.key} -> ${map.value} times"
                     )
                 }
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.height(8.dp))
             Card {
                 Label(
                     labelText = "Spending For Users"
@@ -106,15 +114,16 @@ fun StatisticsScreen(
                         text = "${map.key} -> $${map.value}"
                     )
                 }
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.height(8.dp))
             Card {
                 Label(
-                    labelText = "Loyalty Points For First User"
+                    labelText = "Loyalty Points For ${uiState.userList.first().username}"
                 )
                 StatsItem(
                     text = "${uiState.loyaltyPoints}"
                 )
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
@@ -147,10 +156,7 @@ fun StatsItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 4.dp),
-            style = MaterialTheme.typography.bodyLarge.copy(
-                color = Color.Black
-            ),
+            style = MaterialTheme.typography.bodyLarge,
         )
-        Spacer(modifier = Modifier.height(8.dp))
     }
 }

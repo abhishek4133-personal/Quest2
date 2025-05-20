@@ -55,7 +55,6 @@ fun ECommerceScreen(
                 modifier = Modifier
                     .padding(4.dp),
                 onClick = {
-                    viewModel.getAllStatistics()
                     navController.navigate(Screens.STATS.name)
                 }) {
                 Text(text = "More Stats")
