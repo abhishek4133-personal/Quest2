@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.learn.quest2.helper.Screens
 import com.learn.quest2.presentation.viewmodel.ECommerceViewModel
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ECommerceScreen(
@@ -96,7 +97,7 @@ fun ECommerceScreen(
                                 text = "User Id: ${order.userId}", maxLines = 1, overflow =
                                 TextOverflow.Ellipsis
                             )
-                            Text(text = "Date time: ${order.timestamp}")
+                            Text(text = "Date: ${order.timestamp.format(DateTimeFormatter.ISO_DATE)}")
                             Text(text = "Total order price: $${order.totalOrderValue}")
                             Text(
                                 text = if (isExpanded) "Hide Order Details -" else "Show Order Details +",
