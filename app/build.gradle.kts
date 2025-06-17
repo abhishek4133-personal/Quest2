@@ -63,6 +63,7 @@ dependencies {
 
     implementation(libs.dagger.hilt)
     implementation(libs.hilt.compose.navigation)
+    testImplementation(libs.junit.junit)
     kapt(libs.dagger.kapt)
 
     kapt(libs.androidx.room.compiler)
@@ -85,10 +86,17 @@ dependencies {
     implementation(libs.retrofit.converter.serialization)
     implementation(libs.logging.interceptor)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.androidx.espresso.core)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    implementation(libs.slf4j.simple)
+    testImplementation(kotlin("test"))
+
 }

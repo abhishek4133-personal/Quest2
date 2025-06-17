@@ -10,6 +10,7 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.04.01"
 fragment = "1.8.6"
+mockk = "1.13.10"
 navigation = "2.8.9"
 retrofit = "2.11.0"
 retrofit-converter-moshi = "2.8.2"
@@ -19,6 +20,10 @@ httpLogger = "4.12.0"
 hilt = "2.52"
 room-db = "2.6.0"
 coil-compose = "2.6.0"
+slf4jSimple = "2.0.7"
+truth = "1.1.5"
+turbine = "1.1.0"
+junitJunit = "4.12"
 
 
 [libraries]
@@ -40,6 +45,7 @@ androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "frag
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 retrofit-converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit-converter-scalars" }
@@ -53,6 +59,10 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-db" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-db" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jSimple" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
