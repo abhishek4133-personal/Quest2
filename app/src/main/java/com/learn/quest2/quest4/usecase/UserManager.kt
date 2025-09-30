@@ -23,6 +23,7 @@ class UserManager(
     }
 
     suspend fun refreshAllUsers(): Flow<User> {
+
         return userRepository.fetchAllUsers().also { flow ->
             flow.collect { user ->
                 userCache.putUser(user)
