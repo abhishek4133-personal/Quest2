@@ -19,11 +19,24 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Build debug
-        run: ./gradlew assembleDebug
+      - name: Run lint
+        run: ./gradlew lint
 
       - name: Run unit tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew test -- stacktrace
+
+      - name: Build release
+        run: ./gradlew build
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          path: app/build/outputs/apk/debug/app-release.apk
+
+
+
+
 
 
 
