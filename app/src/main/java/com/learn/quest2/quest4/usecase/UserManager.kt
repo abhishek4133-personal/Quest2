@@ -28,7 +28,6 @@ class UserManager(
                 userCache.putUser(user)
             }
         }
-
     }
 
     fun observeAllUsers(): SharedFlow<List<User>> {
